@@ -6,6 +6,7 @@ public abstract class Cell {
     
     public Cell() {
         this.cleared = false;
+        this.flagged = false;
     }
     
     public void clear() {

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+      prefWidth="325.0" spacing="8.0" xmlns="http://javafx.com/javafx/23.0.1">
+   <padding>
+      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+   </padding>
+   <Label text="How To Play">
+      <font>
+         <Font size="24.0"/>
+      </font>
+   </Label>
+   <ScrollPane fitToWidth="true" prefHeight="350.0">
+      <VBox spacing="8.0">
+         <padding>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+         </padding>
+         <Label text="Introduction" wrapText="true">
+            <font>
+               <Font name="System Bold" size="14.0"/>
+            </font>
+         </Label>
+         <Label text="Mineswepper [sic] is an implementation of the classic game &quot;Minesweeper&quot;, and as such, the rules are the same as any other version of Minesweeper you may have played before."
+                wrapText="true"/>
+         <Label text="The object of the game is to &quot;clear&quot; all the cells of the game board, either by left clicking to reveal them, or right clicking to flag them as mines."
+                wrapText="true"/>
+         <Label text="Revealed cells show a color that indicates if it is a mine, and if not, how many of its eight neighboring cells are mines."
+                wrapText="true"/>
+         <Label text="Using logical reasoning and some guesswork, it is possible to determine the locations of all the mines and uncover the remaining cells, thereby winning the game."
+                wrapText="true"/>
+         <Label text="User Interface" wrapText="true">
+            <font>
+               <Font name="System Bold" size="14.0"/>
+            </font>
+         </Label>
+         <Label text="Mineswepper's UI is very similar to other Minesweeper implementations. At the top of the screen there are three things. In order from left to right, they are:"
+                wrapText="true"/>
+         <Label text="1. The minecount" wrapText="true"/>
+         <Label text="2. The &quot;smiley&quot; button" wrapText="true"/>
+         <Label text="3. The timer" wrapText="true"/>
+         <Label text="The minecount displays the total number of mines on the field minus the number of flagged cells. At the beginning of the game, when there are no flags, the minecount shows the total number of mines that need to be cleared. If the game is won and every mine is flagged, the minecount shows 0. Beware, the minecount can show 0 even if the game is not won, that is, if the flags are in the wrong places. It can also go negative, if there are too many flags."
+                wrapText="true"/>
+         <Label text="The smiley button currently doesn't indicate anything, although it does have the function of starting a new game if you click it. In future versions the smiley button will do what other implementations do, and change its face depending on whether the player is still alive, and if they are chording."
+                wrapText="true"/>
+         <Label text="Chording is not currently implemented, but it is planned, so stay tuned!" wrapText="true"/>
+         <Label text="The final item at the top of the screen in the timer, which displays the number of seconds you've been playing for. Pretty self-explanatory."
+                wrapText="true"/>
+         <Label text="Field, and Colors" wrapText="true">
+            <font>
+               <Font name="System Bold" size="14.0"/>
+            </font>
+         </Label>
+         <Label text="Right below the three indicators is the field. The field is made up of cells which can be either covered or uncovered. A covered cell is unknown, and can be uncovered to reveal itself be left-clicking on it."
+                wrapText="true"/>
+         <Label text="Uncovered cells can be empty, numbered, or mines. Uncovering an empty cell will reveal... nothing, because it's empty. An empty cell guarantees that none of its 8 neighbors are mines, so they can be safely uncovered."
+                wrapText="true"/>
+         <Label text="Uncovering a mine will reveal a black dot in the center of the cell. By uncovering this mine, you've lost the game. To prevent this, it's useful to flag covered cells that you know are mines. Right click on a covered cell to flag it, which will put a red dot on it."
+                wrapText="true"/>
+         <Label text="Finally, there's numbered cells. Uncovering a numbered cell reveals one of eight colors which represent the numbers 1 through 8. The key is:"
+                wrapText="true"/>
+         <Label text="1 - Blue" wrapText="true"/>
+         <Label text="2 - Green" wrapText="true"/>
+         <Label text="3 - Red" wrapText="true"/>
+         <Label text="4 - Dark Blue" wrapText="true"/>
+         <Label text="5 - Dark Red" wrapText="true"/>
+         <Label text="6 - Cyan" wrapText="true"/>
+         <Label text="7 - Pink" wrapText="true"/>
+         <Label text="8 - Dark Magenta" wrapText="true"/>
+         <Label text="So what do these numbers mean? Well, they tell us how many of the eight neighboring cells are mines. Using this number, as well as looking at which of the neighbors are uncovered and are not mines, we can figure out if the covered cells are mines."
+                wrapText="true"/>
+         <Label text="For example, we just uncovered a blue dot, which means there is one mine touching this cell. All except one neighbor are uncovered and they are not mines, so the covered neighbor must be a mine. Flag it, and keep looking for more patterns like this one."
+                wrapText="true"/>
+         <Label text="Now you know the basics of how to play! As you keep playing, you'll discover more patterns which will help you find mines in more different scenarios. You'll be a pro in no time! Good luck!!"
+                wrapText="true"/>
+      </VBox>
+   </ScrollPane>
+</VBox>
