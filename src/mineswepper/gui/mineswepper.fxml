@@ -40,7 +40,7 @@
        <VBox BorderPane.alignment="CENTER">
            <BorderPane prefHeight="30.0">
               <center>
-                  <Button fx:id="face" mnemonicParsing="false" onAction="#newGame" onMousePressed="#update" onMouseReleased="#update" text="UwU" BorderPane.alignment="CENTER" />
+                  <Button fx:id="face" mnemonicParsing="false" onAction="#newGame" text="UwU" BorderPane.alignment="CENTER" />
               </center>
               <left>
                   <HBox alignment="CENTER" minWidth="100.0" BorderPane.alignment="CENTER">

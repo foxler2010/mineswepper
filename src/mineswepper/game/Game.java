@@ -131,11 +131,11 @@ public class Game {
         } // end outer for
     } // end Game()
     
-    public void clear(int x, int y) {
+    public synchronized void clear(int x, int y) {
         field[x][y].clear();
     }
     
-    public void toggleFlag(int x, int y) {
+    public synchronized void toggleFlag(int x, int y) {
         field[x][y].toggleFlag();
         if (field[x][y].isFlagged()) { // the cell just got flagged; decrement mine count
             minesLeft--;
@@ -144,23 +144,23 @@ public class Game {
         }
     }
     
-    public boolean isCleared(int x, int y) {
+    public synchronized boolean isCleared(int x, int y) {
         return field[x][y].isCleared();
     }
     
-    public boolean isFlagged(int x, int y) {
+    public synchronized boolean isFlagged(int x, int y) {
         return field[x][y].isFlagged();
     }
     
-    public int getMinesLeft() {
+    public synchronized int getMinesLeft() {
         return minesLeft;
     }
     
-    public Cell getCell(int x, int y) {
+    public synchronized Cell getCell(int x, int y) {
         return field[x][y];
     }
     
-    public int getTime() {
+    public synchronized int getTime() {
         return (int) (System.nanoTime() / NANOSECONDS_TO_SECONDS) - startTime;
     }
 } // end class Game

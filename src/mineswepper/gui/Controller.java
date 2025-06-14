@@ -1,6 +1,9 @@
 package mineswepper.gui;
 
+import java.io.IOException;
 import javafx.application.Platform;
+import javafx.concurrent.ScheduledService;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -21,8 +24,6 @@ import mineswepper.cells.NumberCell;
 import mineswepper.game.Difficulty;
 import mineswepper.game.Game;
 
-import java.io.IOException;
-
 public class Controller {
     
     // not used in this class, but it needs to be created for the FXML to work
@@ -42,11 +43,26 @@ public class Controller {
     private Difficulty difficulty;
     private GridHelper gridHelper;
     
+    private final ScheduledService<Void> updater = new ScheduledService<>() {
+        @Override
+        protected Task<Void> createTask() {
+            return new Task<>() {
+                @Override
+                protected Void call() {
+                    update();
+                    return null;
+                }
+            };
+        }
+    };
+    
     public void initialize() {
         this.stage = Main.getStage();
         difficulty = Difficulty.EASY;
         gridHelper = new GridHelper(grid);
         newGame();
+        // start the game's update loop in another thread:
+        updater.start();
     }
     
     @FXML
@@ -58,9 +74,6 @@ public class Controller {
         grid.setHeight(difficulty.getHeight() * CoordHelper.cellSize());
         // resize stage to fit everything
         stage.sizeToScene();
-        // display the Cells
-        //gridHelper.drawGrid(difficulty);
-        update();
     } // end newGame()
     
     @FXML
@@ -76,31 +89,33 @@ public class Controller {
         newGame();
     }
     
-    @FXML
     private void update() {
-        mineCount.setText(String.valueOf(game.getMinesLeft()));
+        Platform.runLater(() -> mineCount.setText(String.valueOf(game.getMinesLeft())));
         if (face.isPressed()) {
-            face.setText("OwO");
+            Platform.runLater(() -> face.setText("OwO"));
         } else {
-            face.setText("UwU");
+            Platform.runLater(() -> face.setText("UwU"));
         }
+        Platform.runLater(() -> timer.setText(String.valueOf(game.getTime())));
         for (int x = 0; x < difficulty.getWidth(); x++) {
             for (int y = 0; y < difficulty.getHeight(); y++) {
-                if (game.isCleared(x, y)) {
-                    gridHelper.drawEmptySquare(x, y);
-                if (game.getCell(x, y) instanceof Mine) {
-                    gridHelper.drawMine(x, y);
-                } else if (game.getCell(x, y) instanceof NumberCell) {
-                    gridHelper.drawNumber(x, y, ((NumberCell) game.getCell(x, y)).getNumMines());
-                }
-            } else if (game.isFlagged(x, y)) {
-                    gridHelper.drawFlag(x, y);
+                int finalY = y;
+                int finalX = x;
+                if (game.isCleared(finalX, finalY)) {
+                    Platform.runLater(() -> gridHelper.drawEmptySquare(finalX, finalY));
+                    if (game.getCell(finalX, finalY) instanceof Mine) {
+                        Platform.runLater(() -> gridHelper.drawMine(finalX, finalY));
+                    } else if (game.getCell(finalX, finalY) instanceof NumberCell) {
+                        Platform.runLater(() -> gridHelper.drawNumber(finalX, finalY, ((NumberCell) game.getCell(finalX, finalY)).getNumMines()));
+                    }
+                } else if (game.isFlagged(finalX, finalY)) {
+                    Platform.runLater(() -> gridHelper.drawFlag(finalX, finalY));
                 } else {
-                    gridHelper.drawFullSquare(x, y);
-                }
-            }
-        }
-    }
+                    Platform.runLater(() -> gridHelper.drawFullSquare(finalX, finalY));
+                } // end if
+            } // end inner for
+        } // end outer for
+    } // end update()
     
     @FXML
     public void gridPressed(MouseEvent event) {
@@ -109,7 +124,6 @@ public class Controller {
             int cellY = CoordHelper.gridToCell(event.getY());
             game.toggleFlag(cellX, cellY);
         }
-        update();
     }
     
     @FXML
@@ -119,7 +133,6 @@ public class Controller {
             int cellY = CoordHelper.gridToCell(event.getY());
             game.clear(cellX, cellY);
         }
-        update();
     }
     
     @FXML

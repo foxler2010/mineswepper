@@ -15,15 +15,15 @@ public enum Difficulty {
         this.height = height;
     }
     
-    public int numMines() {
+    public synchronized int numMines() {
         return this.mines;
     }
     
-    public int getWidth() {
+    public synchronized int getWidth() {
         return this.width;
     }
     
-    public int getHeight() {
+    public synchronized int getHeight() {
         return this.height;
     }
 } // end enum Difficulty
